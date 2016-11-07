@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    DBLP XML Records are available from
+    
+    http://dblp.uni-trier.de/xml/
+    
+    Copyright 2001 by Michael Ley (ley@uni-trier.de)
+    
+    Copying of the "DBLP" bibliography collection is permitted provided that
+    the copies are not made or distributed for direct commercial advantage and
+    credit for the source is given. To copy or republish otherwise requires
+    specific permission. ACM, IEEE Computer Society, and The VLDB Endowment
+    have the permission to publish DBLP on CDROM/DVD and on their Web servers. 
+    
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="wrapper">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="dblp"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dblp">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="article"/>
+                <xs:element ref="inproceedings"/>
+                <xs:element ref="proceedings"/>
+                <xs:element ref="book"/>
+                <xs:element ref="incollection"/>
+                <xs:element ref="phdthesis"/>
+                <xs:element ref="mastersthesis"/>
+                <xs:element ref="www"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="field" abstract="true"/>
+    <xs:element name="article">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+            <xs:attribute name="reviewid"/>
+            <xs:attribute name="rating"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="inproceedings">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="proceedings">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="book">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="incollection">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="phdthesis">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="mastersthesis">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="www">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="field"/>
+            </xs:sequence>
+            <xs:attribute name="key" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="author" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="editor" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="address" substitutionGroup="field" type="xs:string"/>
+    <xs:group name="titlecontents">
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:element ref="sub"/>
+                <xs:element ref="sup"/>
+                <xs:element ref="i"/>
+                <xs:element ref="tt"/>
+                <xs:element ref="ref"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:group>
+    <xs:element name="title" substitutionGroup="field">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="titlecontents"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="booktitle" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="pages" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="year" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="journal" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="volume" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="number" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="month" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="url" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="ee" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="cdrom" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="cite" substitutionGroup="field">
+        <xs:complexType mixed="true">
+            <xs:attribute name="label"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="school" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="publisher" substitutionGroup="field">
+        <xs:complexType mixed="true">
+            <xs:attribute name="href"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="note" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="crossref" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="isbn" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="chapter" substitutionGroup="field" type="xs:string"/>
+    <xs:element name="series" substitutionGroup="field">
+        <xs:complexType mixed="true">
+            <xs:attribute name="href"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ref">
+        <xs:complexType mixed="true">
+            <xs:attribute name="href" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sup">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="titlecontents"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sub">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="titlecontents"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="i">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="titlecontents"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tt">
+        <xs:complexType mixed="true">
+            <xs:group minOccurs="0" maxOccurs="unbounded" ref="titlecontents"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+<!--
+    (C) International Organization for Standardization 1986
+    Permission to copy in any form is granted for use with
+    conforming SGML systems and applications as defined in
+    ISO 8879, provided this notice is included in all copies.
+-->
+<!--
+    Character entity set. Typical invocation:
+    <!ENTITY % HTMLlat1 PUBLIC
+      "ISO 8879-1986//ENTITIES Added Latin 1//EN//XML">
+-->
+<!--
+    This version of the entity set can be used with any SGML document
+    which uses ISO 8859-1 or ISO 10646 as its document character 
+    set. This includes XML documents and ISO HTML documents. 
+-->
+<!-- capital A, grave accent -->
+<!-- capital A, acute accent -->
+<!-- capital A, circumflex accent -->
+<!-- capital A, tilde -->
+<!-- capital A, dieresis or umlaut mark -->
+<!-- capital A, ring -->
+<!-- capital AE diphthong (ligature) -->
+<!-- capital C, cedilla -->
+<!-- capital E, grave accent -->
+<!-- capital E, acute accent -->
+<!-- capital E, circumflex accent -->
+<!-- capital E, dieresis or umlaut mark -->
+<!-- capital I, grave accent -->
+<!-- capital I, acute accent -->
+<!-- capital I, circumflex accent -->
+<!-- capital I, dieresis or umlaut mark -->
+<!-- capital Eth, Icelandic -->
+<!-- capital N, tilde -->
+<!-- capital O, grave accent -->
+<!-- capital O, acute accent -->
+<!-- capital O, circumflex accent -->
+<!-- capital O, tilde -->
+<!-- capital O, dieresis or umlaut mark -->
+<!-- capital O, slash -->
+<!-- capital U, grave accent -->
+<!-- capital U, acute accent -->
+<!-- capital U, circumflex accent -->
+<!-- capital U, dieresis or umlaut mark -->
+<!-- capital Y, acute accent -->
+<!-- capital THORN, Icelandic -->
+<!-- small sharp s, German (sz ligature) -->
+<!-- small a, grave accent -->
+<!-- small a, acute accent -->
+<!-- small a, circumflex accent -->
+<!-- small a, tilde -->
+<!-- small a, dieresis or umlaut mark -->
+<!-- small a, ring -->
+<!-- small ae diphthong (ligature) -->
+<!-- small c, cedilla -->
+<!-- small e, grave accent -->
+<!-- small e, acute accent -->
+<!-- small e, circumflex accent -->
+<!-- small e, dieresis or umlaut mark -->
+<!-- small i, grave accent -->
+<!-- small i, acute accent -->
+<!-- small i, circumflex accent -->
+<!-- small i, dieresis or umlaut mark -->
+<!-- small eth, Icelandic -->
+<!-- small n, tilde -->
+<!-- small o, grave accent -->
+<!-- small o, acute accent -->
+<!-- small o, circumflex accent -->
+<!-- small o, tilde -->
+<!-- small o, dieresis or umlaut mark -->
+<!-- small o, slash -->
+<!-- small u, grave accent -->
+<!-- small u, acute accent -->
+<!-- small u, circumflex accent -->
+<!-- small u, dieresis or umlaut mark -->
+<!-- small y, acute accent -->
+<!-- small thorn, Icelandic -->
+<!-- small y, dieresis or umlaut mark -->
