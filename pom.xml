@@ -24,8 +24,8 @@
 
     <properties>
         <jute.version>1.1.1</jute.version>
-        <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
-        <maven-compiler-plugin.target>1.8</maven-compiler-plugin.target>
+        <maven-compiler-plugin.source>1.6</maven-compiler-plugin.source>
+        <maven-compiler-plugin.target>1.6</maven-compiler-plugin.target>
         <junit.version>4.12</junit.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>

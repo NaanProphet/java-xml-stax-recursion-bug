@@ -12,12 +12,10 @@ import javax.xml.stream.events.XMLEvent;
 import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -65,11 +63,10 @@ public class SimpleStaxTest {
         // pre-check 1
         RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
         List<String> arguments = runtimeMxBean.getInputArguments();
-        boolean jvmContainsPatch = arguments.stream().anyMatch((jvmArg) -> (JVM_ARG_PATCH).equals(jvmArg));
         Assert.assertTrue("Test is not running with patched JVM argument! " +
                 "Please note this JUnit cannot be run from the IDE and must be run through Maven " +
                 "in order for the JUnit to run with proper JVM arguments. " +
-                "Current JVM arguments: " + arguments, jvmContainsPatch);
+                "Current JVM arguments: " + arguments, jvmContainsPatch(arguments));
 
         // pre-check 2
         File patchFolder = new File(MAVEN_GENERATED_PATCH_LOCATION + PATCH_FILE_PACKAGE);
@@ -78,6 +75,17 @@ public class SimpleStaxTest {
                 "Please note this JUnit cannot be run from the IDE and must " +
                 "be run through Maven in order for the JUnit to run with proper JVM arguments. " +
                 "Expected patch file location: " + patchFile.getAbsolutePath(), patchFile.exists());
+    }
+
+    private boolean jvmContainsPatch(List<String> arguments) {
+        boolean jvmContainsPatch = false;
+        for (String jvmArg : arguments) {
+            if (JVM_ARG_PATCH.equals(jvmArg)) {
+                jvmContainsPatch = true;
+                break;
+            }
+        }
+        return jvmContainsPatch;
     }
 
     /**
@@ -93,11 +101,14 @@ public class SimpleStaxTest {
         System.out.println("Great success, k bye");
     }
 
-    private Consumer<XMLEventReader> visitNextEvent = xmlEventReader -> {
-        try {
-            xmlEventReader.nextEvent();
-        } catch (XMLStreamException e) {
-            throw new IllegalStateException("Could not read next XML event!", e);
+    private Consumer<XMLEventReader> visitNextEvent = new Consumer<XMLEventReader>() {
+        @Override
+        public void accept(XMLEventReader xmlEventReader) {
+            try {
+                xmlEventReader.nextEvent();
+            } catch (XMLStreamException e) {
+                throw new IllegalStateException("Could not read next XML event!", e);
+            }
         }
     };
 
@@ -117,16 +128,6 @@ public class SimpleStaxTest {
             try {
                 // i.e. calls either nextEvent or nextTag
                 xmlEventReaderConsumer.accept(filteringEventReader);
-            } catch (NoSuchElementException e) {
-                break;
-            }
-        }
-    }
-
-    private static void visitAllTags(XMLEventReader filteringEventReader) throws XMLStreamException {
-        while (true) {
-            try {
-                filteringEventReader.nextTag();
             } catch (NoSuchElementException e) {
                 break;
             }
@@ -183,5 +184,14 @@ public class SimpleStaxTest {
         public void setTagToFilter(String tagToFilter) {
             this.tagToFilter = tagToFilter;
         }
+    }
+
+    /**
+     * Java 8-esque static interface, since we're compiling to Java 6
+     *
+     * @param <T>
+     */
+    public interface Consumer <T>{
+        void accept(T param);
     }
 }
