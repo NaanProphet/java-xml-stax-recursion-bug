@@ -64,34 +64,32 @@ public class EventFilterSupport extends EventReaderDelegate {
     }
 
     public XMLEvent nextEvent()throws XMLStreamException{
-        if(super.hasNext()){
-            //get the next event by calling XMLEventReader
-            XMLEvent event = super.nextEvent();
+        while (true) {
+            if(super.hasNext()){
+                //get the next event by calling XMLEventReader
+                XMLEvent event = super.nextEvent();
 
-            //if this filter accepts this event then return this event
-            if(fEventFilter.accept(event)){
-                return event;
+                //if this filter accepts this event then return this event
+                if(fEventFilter.accept(event)){
+                    return event;
+                }
+            }else{
+                throw new NoSuchElementException();
             }
-            else{
-                return nextEvent();
-            }
-        }else{
-            throw new NoSuchElementException();
         }
     }//nextEvent()
 
      public XMLEvent nextTag() throws XMLStreamException{
-         if(super.hasNext()){
-             XMLEvent event = super.nextTag();
-             //if the filter accepts this event return this event.
-             if(fEventFilter.accept(event)){
-                return event;
+         while (true) {
+             if(super.hasNext()){
+                 XMLEvent event = super.nextTag();
+                 //if the filter accepts this event return this event.
+                 if(fEventFilter.accept(event)){
+                    return event;
+                 }
+             }else{
+                 throw new NoSuchElementException();
              }
-             else{
-                return nextTag();
-             }
-         }else{
-             throw new NoSuchElementException();
          }
      }
 
