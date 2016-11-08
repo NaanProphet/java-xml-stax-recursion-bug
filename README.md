@@ -18,5 +18,17 @@ When streaming large XML files using an event filter, the `EventFilterSupport#ne
 ## Test Cases
 The JUnit stress tests the API using a 100 MB XML file taken from the [Digital Bibliography Library Project](http://www.cs.washington.edu/research/xmldatasets/) using only 256 MB of max heap space. Note: tests must be run from Maven the `mvn test` goal (i.e. not from the IDE) in order for patched JVM arguments to take effect via the JUte maven plugin.
 
+Note: for proper JUnit testing, this repo should be cloned via
+```
+git lfs clone
+```
+ rather than `git clone`. Otherwise, the XML test file will simply be a plaintext git lfs file resembling:
+```
+version https://git-lfs.github.com/spec/v1
+oid sha256:2cffc115ba717045d3bf78aefaf4fdcd971878f420ff31716a1353df316277ef
+size 133439113
+```
+which will then throw `java.util.zip.ZipException: Not in GZIP format`.
+
 ## Original Source Code
 For reference, the original source code is available at http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/com/sun/xml/internal/stream/EventFilterSupport.java/
