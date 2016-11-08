@@ -1,8 +1,6 @@
 # java-xml-stax-recursion-bug
 [![Build Status](https://travis-ci.org/NaanProphet/java-xml-stax-recursion-bug.svg?branch=master)](https://travis-ci.org/NaanProphet/java-xml-stax-recursion-bug)
 
-Bug fix for the Java Virtual Machine, submitted to the friends at Oracle.
-
 ## Versions Affected
 * Mac OS X (locally)
   * **1.8.0_102** Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
